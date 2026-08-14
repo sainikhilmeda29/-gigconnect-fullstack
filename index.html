@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GigConnect — Freelancing Platform</title>
+<style>
+:root{
+  --bg:#f7f8fc; --card:#fff; --text:#172033; --muted:#697386;
+  --primary:#5b5cf0; --primary2:#7b61ff; --green:#16a34a;
+  --border:#e8eaf1; --shadow:0 12px 35px rgba(28,35,70,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--text)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.nav{height:72px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;z-index:10}
+.logo{font-weight:800;font-size:23px;color:var(--primary)}
+.logo span{color:#111827}
+.navlinks{display:flex;gap:24px;align-items:center}
+.navlinks a{color:#586174;text-decoration:none;font-size:14px;cursor:pointer}
+.btn{border:0;border-radius:11px;padding:11px 17px;font-weight:700}
+.primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff}
+.secondary{background:#eef0ff;color:var(--primary)}
+.outline{background:#fff;border:1px solid var(--border);color:#374151}
+.container{max-width:1180px;margin:auto;padding:0 22px}
+.page{display:none}.page.active{display:block}
+.hero{padding:70px 0 50px;background:linear-gradient(135deg,#f0f1ff,#fff)}
+.heroGrid{display:grid;grid-template-columns:1.15fr .85fr;gap:45px;align-items:center}
+.badge{display:inline-block;background:#e9eaff;color:#4d4edc;padding:7px 12px;border-radius:30px;font-size:12px;font-weight:800}
+h1{font-size:52px;line-height:1.04;margin:18px 0}
+h2{font-size:30px;margin:0 0 8px} h3{margin:0 0 7px}
+.lead{font-size:18px;color:var(--muted);line-height:1.7;max-width:620px}
+.heroBtns{display:flex;gap:12px;margin-top:25px}
+.heroCard{background:#fff;border:1px solid var(--border);border-radius:22px;padding:22px;box-shadow:var(--shadow)}
+.searchBox{display:flex;gap:8px;background:#fff;border:1px solid var(--border);padding:8px;border-radius:14px;margin-top:24px}
+.searchBox input{border:0;outline:0;flex:1;padding:10px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:25px 0}
+.stat{background:#fff;padding:18px;border:1px solid var(--border);border-radius:15px}
+.stat b{font-size:25px}.stat small{display:block;color:var(--muted);margin-top:4px}
+.section{padding:50px 0}.sectionHead{display:flex;justify-content:space-between;align-items:end;margin-bottom:22px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:17px;padding:20px;box-shadow:0 5px 18px rgba(20,25,50,.04)}
+.job{min-height:210px;display:flex;flex-direction:column;justify-content:space-between}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tag{display:inline-block;background:#f1f2f6;color:#596274;padding:5px 9px;border-radius:7px;font-size:11px;margin:3px}
+.price{font-weight:800;color:#172033}.muted{color:var(--muted);font-size:13px}
+.rating{color:#e89b13;font-weight:700}
+.features .card{min-height:170px}
+.icon{width:40px;height:40px;border-radius:12px;background:#eef0ff;color:var(--primary);display:grid;place-items:center;font-size:20px;margin-bottom:15px}
+.dashboard{padding:35px 0}.dashgrid{display:grid;grid-template-columns:220px 1fr;gap:22px}
+.sidebar{background:#fff;border:1px solid var(--border);border-radius:17px;padding:15px;height:max-content}
+.sideBtn{width:100%;text-align:left;border:0;background:transparent;padding:12px;border-radius:9px;color:#596274;margin-bottom:3px}
+.sideBtn.active,.sideBtn:hover{background:#eef0ff;color:var(--primary);font-weight:700}
+.mainPanel{min-width:0}.panelTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.joblist{display:grid;gap:13px}.jobitem{background:#fff;border:1px solid var(--border);border-radius:15px;padding:17px}
+.progress{height:8px;background:#eceef5;border-radius:20px;overflow:hidden;margin:10px 0}.progress span{display:block;height:100%;background:var(--primary);border-radius:20px}
+.form{max-width:720px;margin:35px auto;background:#fff;padding:30px;border-radius:20px;border:1px solid var(--border);box-shadow:var(--shadow)}
+label{display:block;font-size:13px;font-weight:700;margin:16px 0 7px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #dfe2eb;border-radius:10px;outline:none}
+textarea{min-height:120px;resize:vertical}
+footer{padding:30px 0;background:#15192a;color:#adb4c6;margin-top:30px}
+footer .logo{color:#9a9cff}
+.ai{background:linear-gradient(135deg,#151b39,#272d63);color:#fff}
+.ai .muted{color:#c6cbe2}
+.pill{background:#dff8e8;color:#147b38;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:800}
+.toast{position:fixed;right:20px;bottom:20px;background:#172033;color:#fff;padding:13px 17px;border-radius:10px;display:none;z-index:30}
+@media(max-width:800px){
+ .heroGrid,.dashgrid{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.navlinks{display:none}
+ h1{font-size:40px}.stats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo">Gig<span>Connect</span></div>
+  <div class="navlinks">
+    <a onclick="showPage('home')">Home</a>
+    <a onclick="showPage('jobs')">Find Jobs</a>
+    <a onclick="showPage('post')">Post a Job</a>
+    <a onclick="showPage('dashboard')">Dashboard</a>
+    <button class="btn primary" onclick="showPage('post')">Get Started</button>
+  </div>
+</nav>
+
+<main id="home" class="page active">
+<section class="hero">
+<div class="container heroGrid">
+ <div>
+  <span class="badge">INDIA'S SMART FREELANCE MARKETPLACE</span>
+  <h1>Find talent.<br><span style="color:#5b5cf0">Build anything.</span></h1>
+  <p class="lead">A secure platform connecting Indian freelancers, gig workers and employers through smart recommendations, project tools and protected payments.</p>
+  <div class="heroBtns">
+   <button class="btn primary" onclick="showPage('jobs')">Find Freelance Work →</button>
+   <button class="btn outline" onclick="showPage('post')">Hire Talent</button>
+  </div>
+  <div class="searchBox">
+   <input id="homeSearch" placeholder="Search skills, jobs or services..." onkeydown="if(event.key==='Enter')searchJobs()">
+   <button class="btn primary" onclick="searchJobs()">Search</button>
+  </div>
+ </div>
+ <div class="heroCard">
+  <div class="row"><b>AI Match for you</b><span class="pill">92% Match</span></div>
+  <p class="muted">Based on your skills, portfolio and previous work</p>
+  <div class="card" style="margin-top:15px">
+   <div class="row"><div><b>React Frontend Developer</b><div class="muted">TechNova India</div></div><b class="price">₹25k–₹40k</b></div>
+   <div style="margin-top:12px"><span class="tag">React</span><span class="tag">JavaScript</span><span class="tag">Figma</span></div>
+   <button class="btn secondary" style="width:100%;margin-top:14px" onclick="applyJob('React Frontend Developer')">Apply Now</button>
+  </div>
+ </div>
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+ <div class="sectionHead"><div><h2>Why GigConnect?</h2><p class="muted">Everything needed to manage freelance projects.</p></div></div>
+ <div class="grid features">
+  <div class="card"><div class="icon">🔎</div><h3>Smart Job Search</h3><p class="muted">Search and filter opportunities by skill, budget, category and location.</p></div>
+  <div class="card"><div class="icon">🤖</div><h3>AI Recommendations</h3><p class="muted">Get personalized jobs and freelancer suggestions using profile and project data.</p></div>
+  <div class="card"><div class="icon">🔐</div><h3>Secure Escrow</h3><p class="muted">Payments are protected and released when project milestones are approved.</p></div>
+ </div>
+ <div class="stats">
+  <div class="stat"><b>25K+</b><small>Freelancers</small></div>
+  <div class="stat"><b>8K+</b><small>Projects posted</small></div>
+  <div class="stat"><b>₹4.2Cr+</b><small>Payments protected</small></div>
+ </div>
+</div>
+</section>
+</main>
+
+<section id="jobs" class="page">
+<div class="container section">
+ <div class="sectionHead"><div><h2>Find Freelance Jobs</h2><p class="muted">Opportunities matched to your skills.</p></div><button class="btn primary" onclick="showPage('post')">+ Post a Job</button></div>
+ <div class="searchBox" style="margin:0 0 22px"><input id="jobSearch" placeholder="Search React, Python, design, writing..." oninput="filterJobs()"><button class="btn secondary" onclick="filterJobs()">Search</button></div>
+ <div id="jobGrid" class="grid"></div>
+</div>
+</section>
+
+<section id="post" class="page">
+<div class="form">
+ <span class="badge">EMPLOYER</span><h2 style="margin-top:12px">Post a New Project</h2><p class="muted">Tell freelancers exactly what you need.</p>
+ <label>Project title</label><input id="title" placeholder="e.g. Build a college event website">
+ <label>Category</label><select id="category"><option>Web Development</option><option>AI / Machine Learning</option><option>UI/UX Design</option><option>Content Writing</option><option>Marketing</option></select>
+ <label>Budget</label><input id="budget" placeholder="₹10,000 - ₹25,000">
+ <label>Required skills</label><input id="skills" placeholder="Python, React, Figma...">
+ <label>Project description</label><textarea id="desc" placeholder="Describe requirements, timeline and expected deliverables"></textarea>
+ <button class="btn primary" style="width:100%;margin-top:20px" onclick="postJob()">Publish Project</button>
+</div>
+</section>
+
+<section id="dashboard" class="page">
+<div class="container dashboard">
+<div class="dashgrid">
+ <aside class="sidebar">
+  <h3 style="padding:8px">My Workspace</h3>
+  <button class="sideBtn active">📊 Overview</button>
+  <button class="sideBtn">💼 My Projects</button>
+  <button class="sideBtn">💰 Payments & Escrow</button>
+  <button class="sideBtn">⭐ Reviews</button>
+  <button class="sideBtn">👤 Profile & Portfolio</button>
+ </aside>
+ <div class="mainPanel">
+  <div class="panelTop"><div><h2>Welcome, Freelancer 👋</h2><p class="muted">Here is your project activity.</p></div><button class="btn primary" onclick="showPage('jobs')">Find Work</button></div>
+  <div class="grid">
+   <div class="card"><p class="muted">Active Projects</p><h2>4</h2><div class="progress"><span style="width:70%"></span></div><small class="muted">70% average progress</small></div>
+   <div class="card"><p class="muted">Total Earnings</p><h2>₹68,500</h2><span class="pill">+18% this month</span></div>
+   <div class="card"><p class="muted">Profile Rating</p><h2>4.9 ⭐</h2><small class="muted">From 32 completed projects</small></div>
+  </div>
+  <div class="card ai" style="margin-top:18px">
+   <div class="row"><div><h3>🤖 AI Opportunity Assistant</h3><p class="muted">3 projects are highly suitable for your profile.</p></div><span class="pill">AI Powered</span></div>
+   <button class="btn" style="margin-top:10px;background:#fff;color:#20254b" onclick="showPage('jobs')">View Recommendations</button>
+  </div>
+  <div style="margin-top:22px"><h3>Project Payments</h3>
+   <div class="joblist">
+    <div class="jobitem"><div class="row"><div><b>Campus App UI</b><div class="muted">Milestone 2 of 3</div></div><span class="pill">₹12,000 in Escrow</span></div><div class="progress"><span style="width:66%"></span></div></div>
+    <div class="jobitem"><div class="row"><div><b>AI Chatbot Integration</b><div class="muted">Milestone 1 of 2</div></div><span class="pill">₹18,000 in Escrow</span></div><div class="progress"><span style="width:45%"></span></div></div>
+   </div>
+  </div>
+ </div>
+</div>
+</div>
+</section>
+
+<footer><div class="container"><div class="logo">GigConnect</div><p>Smart freelancing infrastructure for India — discover work, build trust, get paid securely.</p></div></footer>
+<div id="toast" class="toast"></div>
+
+<script>
+let jobs = [];
+
+async function api(path, options = {}) {
+  const res = await fetch(path, {
+    headers: {"Content-Type": "application/json", ...(options.headers || {})},
+    ...options
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || "Request failed");
+  return data;
+}
+
+async function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='jobs') await loadJobs();
+}
+
+async function loadJobs(){
+  try {
+    jobs = await api('/api/jobs');
+    renderJobs(jobs);
+  } catch(e) {
+    toast("Backend connection failed. Is the server running?");
+  }
+}
+
+function renderJobs(list){
+  const grid=document.getElementById('jobGrid');
+  grid.innerHTML=list.map(j=>`
+  <div class="card job">
+   <div>
+    <div class="row"><span class="badge">PROJECT</span><span class="rating">★ ${j.rating || 'New'}</span></div>
+    <h3 style="margin-top:14px">${escapeHtml(j.title)}</h3>
+    <p class="muted">${escapeHtml(j.company || 'Employer')}</p>
+    <div>${(j.skills || []).map(s=>`<span class="tag">${escapeHtml(s)}</span>`).join('')}</div>
+    <p class="muted" style="margin-top:10px">${escapeHtml(j.description || '')}</p>
+   </div>
+   <div class="row" style="margin-top:20px">
+    <b class="price">${escapeHtml(j.budget || 'Negotiable')}</b>
+    <button class="btn primary" onclick="applyJob(${j.id}, '${escapeJs(j.title)}')">Apply</button>
+   </div>
+  </div>`).join('') || '<div class="card"><h3>No projects found</h3><p class="muted">Try another search.</p></div>';
+}
+
+async function filterJobs(){
+  const q=(document.getElementById('jobSearch').value||'').trim();
+  try {
+    jobs = await api('/api/jobs' + (q ? '?q=' + encodeURIComponent(q) : ''));
+    renderJobs(jobs);
+  } catch(e) { toast(e.message); }
+}
+
+async function searchJobs(){
+  const q=document.getElementById('homeSearch').value;
+  await showPage('jobs');
+  document.getElementById('jobSearch').value=q;
+  await filterJobs();
+}
+
+async function applyJob(id, title){
+  try {
+    await api('/api/applications', {
+      method:'POST',
+      body:JSON.stringify({job_id:id, freelancer_id:1, message:'I am interested in this project.'})
+    });
+    toast('Application saved for "' + title + '"');
+  } catch(e) { toast(e.message); }
+}
+
+async function postJob(){
+  const title=document.getElementById('title').value.trim();
+  if(!title){toast('Please enter a project title');return}
+  try {
+    await api('/api/jobs', {
+      method:'POST',
+      body:JSON.stringify({
+        employer_id:2,
+        title,
+        category:document.getElementById('category').value,
+        budget:document.getElementById('budget').value,
+        skills:document.getElementById('skills').value.split(',').map(x=>x.trim()).filter(Boolean),
+        description:document.getElementById('desc').value
+      })
+    });
+    document.getElementById('title').value='';
+    document.getElementById('budget').value='';
+    document.getElementById('skills').value='';
+    document.getElementById('desc').value='';
+    toast('Project stored in the database successfully!');
+    await showPage('jobs');
+  } catch(e) { toast(e.message); }
+}
+
+function escapeHtml(s){
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+function escapeJs(s){ return String(s ?? '').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,' '); }
+
+function toast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';
+  setTimeout(()=>t.style.display='none',2800);
+}
+
+loadJobs();
+</script>
+</body>
+</html>
